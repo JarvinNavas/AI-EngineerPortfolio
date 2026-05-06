@@ -1,0 +1,413 @@
+{
+  "name": "Proyecto_1",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        240
+      ],
+      "id": "5597c5d8-0466-4f1b-861c-c74b6efaf147",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "const cities = ['Bogota', 'Medellin', 'Cali', 'Barranquilla'];\nconst levels = ['diamond', 'silver', 'bronze', 'danger'];\nconst vehicles = ['motorcycle', 'bicycle'];\nconst nationalities = ['Colombian', 'Foreign', 'Unidentified'];\nconst docTypes = ['CC', 'PEP', 'CE', 'Unknown'];\n\nconst data = [];\n\nfor (let i = 0; i < 100; i++) {\n  data.push({\n    json: {\n      CITY: cities[Math.floor(Math.random() * cities.length)],\n      STOREKEEPER_ID: Math.floor(100000 + Math.random() * 900000),\n      NAME: `Storekeeper Test ${i + 1}`,\n      DOCUMENT_TYPE: docTypes[Math.floor(Math.random() * docTypes.length)],\n      IDENTIFICATION_NUMBER: Math.floor(10000000 + Math.random() * 90000000),\n      AGE: Math.floor(18 + Math.random() * 40),\n      CURRENT_LEVEL: levels[Math.floor(Math.random() * levels.length)],\n      VEHICLE: vehicles[Math.floor(Math.random() * vehicles.length)],\n      NATIONALITY: nationalities[Math.floor(Math.random() * nationalities.length)],\n      TOTAL_EARNINGS_USD: parseFloat((Math.random() * 3000).toFixed(2))\n    }\n  });\n}\n\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        -176
+      ],
+      "id": "aa8d50ce-1eea-45cf-8a2d-d047a2b0f293",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f7a6fe39-9d87-41a8-a276-bdd66ee0cdab",
+              "leftValue": "={{ $json.CURRENT_LEVEL }}",
+              "rightValue": "diamond",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "cba17ba2-41d5-4747-9705-a0b44bea43e1",
+              "leftValue": "={{ $json.TOTAL_EARNINGS_USD }}",
+              "rightValue": 2000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -48,
+        -176
+      ],
+      "id": "f791c2fd-765c-4f45-9c42-43c7e6f5c772",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1WnjDRkfsOk4sdwOkNvnbqk5dcWJbtSY6X4Z9x6qh9OQ",
+          "mode": "list",
+          "cachedResultName": "n8n proyectos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WnjDRkfsOk4sdwOkNvnbqk5dcWJbtSY6X4Z9x6qh9OQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WnjDRkfsOk4sdwOkNvnbqk5dcWJbtSY6X4Z9x6qh9OQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        176,
+        -176
+      ],
+      "id": "cfe6089f-78d8-463e-88e6-c0dd765c02b9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7oTIkei4Dn5O6VZz",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const cities = ['Bogota', 'Medellin', 'Cali', 'Barranquilla'];\nconst levels = ['diamond', 'silver', 'bronze', 'danger'];\nconst vehicles = ['motorcycle', 'bicycle'];\nconst nationalities = ['Colombian', 'Foreign', 'Unidentified'];\nconst docTypes = ['CC', 'PEP', 'CE', 'Unknown'];\n\nconst data = [];\n\nfor (let i = 0; i < 100; i++) {\n  data.push({\n    json: {\n      CITY: cities[Math.floor(Math.random() * cities.length)],\n      STOREKEEPER_ID: Math.floor(100000 + Math.random() * 900000),\n      NAME: `Storekeeper Test ${i + 1}`,\n      DOCUMENT_TYPE: docTypes[Math.floor(Math.random() * docTypes.length)],\n      IDENTIFICATION_NUMBER: Math.floor(10000000 + Math.random() * 90000000),\n      AGE: Math.floor(18 + Math.random() * 40),\n      CURRENT_LEVEL: levels[Math.floor(Math.random() * levels.length)],\n      VEHICLE: vehicles[Math.floor(Math.random() * vehicles.length)],\n      NATIONALITY: nationalities[Math.floor(Math.random() * nationalities.length)],\n      TOTAL_EARNINGS_USD: parseFloat((Math.random() * 3000).toFixed(2))\n    }\n  });\n}\n\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        48
+      ],
+      "id": "dcdb03eb-4b75-41dc-82c5-17323670fb98",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bf94fb42-1ab7-49d2-9a57-279645509954",
+              "leftValue": "={{ $json.NATIONALITY }}",
+              "rightValue": "Foreign",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "08f797b4-c882-4417-8c6e-db1fd0228add",
+              "leftValue": "={{ $json.DOCUMENT_TYPE }}",
+              "rightValue": "Unknown",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        176,
+        48
+      ],
+      "id": "f12aed01-712b-4fc0-96c2-3d9629d931f4",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "navasjarvin@gmail.com",
+        "subject": "=",
+        "message": "={{ $json.output[0].content[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        48
+      ],
+      "id": "e5e0e254-25fe-4d11-bb8e-90620a016788",
+      "name": "Send a message",
+      "webhookId": "fd4c61dc-1c8f-4055-b0e0-0e027932e887",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "61KYcayXlArl1YDe",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-NANO"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Instrucción de Formato: Debes responder ÚNICAMENTE con un objeto JSON. No escribas introducciones ni despedidas. El formato debe ser:\n{\n\"asunto\": \"Texto del asunto aquí\",\n\"cuerpo\": \"Texto del cuerpo aquí\"\n}\n\nTarea: Redacta un correo para un repartidor con datos incompletos.\nAsunto obligatorio: URGENTE! Actualización de datos en la aplicación.\n\nDatos del repartidor:\n\n    Nombre: {{ $json.NAME }}\n\n    ID: {{ $json.STOREKEEPER_ID }}\n\n    Nacionalidad: {{ $json.NATIONALITY }}\n\n    Tipo de Doc: {{ $json.DOCUMENT_TYPE }}\n\nTono: Profesional y urgente.\nFirma: Jarvin Navas, CEO SpaceX.\n\nGuía de redacción: Informar que su documento y nacionalidad no están actualizados y que debe hacerlo pronto para evitar la suspensión de la cuenta.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        400,
+        48
+      ],
+      "id": "368551cd-26c9-4189-99f8-3e42d1b4a650",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Z1L28JpTInlMvV5s",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const cities = ['Bogota', 'Medellin', 'Cali', 'Barranquilla'];\nconst levels = ['diamond', 'silver', 'bronze', 'danger'];\nconst vehicles = ['motorcycle', 'bicycle'];\nconst nationalities = ['Colombian', 'Foreign', 'Unidentified'];\nconst docTypes = ['CC', 'PEP', 'CE', 'Unknown'];\n\nconst data = [];\n\nfor (let i = 0; i < 100; i++) {\n  data.push({\n    json: {\n      CITY: cities[Math.floor(Math.random() * cities.length)],\n      STOREKEEPER_ID: Math.floor(100000 + Math.random() * 900000),\n      NAME: `Storekeeper Test ${i + 1}`,\n      DOCUMENT_TYPE: docTypes[Math.floor(Math.random() * docTypes.length)],\n      IDENTIFICATION_NUMBER: Math.floor(10000000 + Math.random() * 90000000),\n      AGE: Math.floor(18 + Math.random() * 40),\n      CURRENT_LEVEL: levels[Math.floor(Math.random() * levels.length)],\n      VEHICLE: vehicles[Math.floor(Math.random() * vehicles.length)],\n      NATIONALITY: nationalities[Math.floor(Math.random() * nationalities.length)],\n      TOTAL_EARNINGS_USD: parseFloat((Math.random() * 3000).toFixed(2))\n    }\n  });\n}\n\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        272
+      ],
+      "id": "a3c459cc-46b7-47d3-aad9-5dd4aa5a60a0",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "10260144-41dd-46ac-b22d-18201d8e34a6",
+              "name": "CITY",
+              "value": "={{ $json.CITY.toUpperCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "b4af3c23-d00e-4e07-a53a-9bb2c2257313",
+              "name": "AGE_GROUP",
+              "value": "={{ $json[\"AGE\"] < 25 ? \"Junior\" : ($json[\"AGE\"] <= 35 ? \"Mid\" : \"Senior\") }}",
+              "type": "string"
+            },
+            {
+              "id": "35da69a3-e90a-4f7b-840f-a75434a6b111",
+              "name": "TOTAL_EARNINGS",
+              "value": "={{ $json.TOTAL_EARNINGS_USD }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        272
+      ],
+      "id": "449ed3ed-80de-488c-a3b2-2a76a8b48735",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "sum",
+              "field": "TOTAL_EARNINGS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        272
+      ],
+      "id": "8949e95e-0878-4ac7-a4ee-def549e279f5",
+      "name": "Summarize",
+      "notesInFlow": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "9gAiAlmKi3XyHxJl"
+  },
+  "versionId": "c95c0c61-5926-4510-837c-bde955259605",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "09275135c3ae5b5b294fb1134c4f284cf338f6038ff1e3ef43700a71c942245b"
+  },
+  "id": "AXwMWnoNZgyySaj2",
+  "tags": [
+    {
+      "updatedAt": "2026-04-30T02:37:11.537Z",
+      "createdAt": "2026-04-30T02:37:11.537Z",
+      "id": "v2tE17xEQrtM5WvS",
+      "name": "Mi primer Proyecto"
+    }
+  ]
+}
