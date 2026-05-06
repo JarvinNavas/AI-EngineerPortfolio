@@ -12,8 +12,6 @@
 |:---:|:---:|
 | ![Main Interface](assets/screenshot_chat.png) | ![Sources View](assets/screenshot_sources.png) |
 
-> **💡 Engineer's Note:** If images are not visible in Cursor, press `Ctrl + Shift + V` to open the Markdown Preview. Ensure the `assets` folder exists in the same directory as this README.
-
 ---
 
 ## 🏗️ Architecture & Data Flow
