@@ -1,0 +1,14 @@
+# Ignorar el entorno virtual (muy pesado)
+venv/
+.venv/
+
+# Ignorar las llaves secretas (seguridad)
+.env
+
+# Ignorar la base de datos local (se genera con ingest.py)
+mi_base_de_datos/
+
+# Ignorar archivos basura de Python y carpetas de sistema
+__pycache__/
+.DS_Store
+*.pdf
