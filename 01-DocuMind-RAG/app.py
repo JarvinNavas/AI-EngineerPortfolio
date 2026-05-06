@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
-# Usamos CORE en lugar de CHAINS (Más estable)
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
@@ -19,10 +18,10 @@ st.title("🚀 DocuMind: RAG Engine")
 def inicializar_sistema():
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_db = Chroma(persist_directory="./mi_base_de_datos", embedding_function=embeddings)
-    retriever = vector_db.as_retriever()
+    # El retriever buscará los 3 fragmentos más parecidos
+    retriever = vector_db.as_retriever(search_kwargs={"k": 3})
     llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0)
 
-    # Definimos el Prompt
     template = """Eres un asistente técnico. Responde basado solo en el contexto:
     {context}
     
@@ -30,23 +29,23 @@ def inicializar_sistema():
     """
     prompt = ChatPromptTemplate.from_template(template)
 
-    # LA MAGIA: Construimos la cadena con el operador "|" (Pipe)
-    # Esto no usa el módulo "chains", así que no dará error.
-    rag_chain = (
-        {"context": retriever, "question": RunnablePassthrough()}
+    # Cadena para generar la respuesta
+    chain = (
+        {"context": lambda x: x["context"], "question": lambda x: x["question"]}
         | prompt
         | llm
         | StrOutputParser()
     )
-    return rag_chain
+    
+    return retriever, chain
 
-chain = inicializar_sistema()
+retriever, chain = inicializar_sistema()
 
 if "historial" not in st.session_state:
     st.session_state.historial = []
 
 for msj in st.session_state.historial:
-    with st.chat_message(msj["rol"]):
+    with st.chat_message(msj["role"]):
         st.write(msj["texto"])
 
 pregunta = st.chat_input("Consulta tu manual...")
@@ -57,7 +56,19 @@ if pregunta:
         st.write(pregunta)
 
     with st.chat_message("assistant"):
-        # En LCEL se usa .invoke directamente
-        respuesta = chain.invoke(pregunta)
+        # PASO CLAVE: Primero recuperamos los documentos manualmente
+        docs_relevantes = retriever.invoke(pregunta)
+        
+        # Extraemos el contenido para el LLM
+        contexto_combinado = "\n\n".join([doc.page_content for doc in docs_relevantes])
+        
+        # Generamos la respuesta pasando el contexto
+        respuesta = chain.invoke({"context": contexto_combinado, "question": pregunta})
         st.write(respuesta)
-        st.session_state.historial.append({"role": "assistant", "texto": respuesta})
+        
+        # MOSTRAR FUENTES: Extraemos los números de página de los metadatos
+        paginas = sorted(list(set([str(doc.metadata.get('page', 0) + 1) for doc in docs_relevantes])))
+        fuentes_texto = f"📌 **Fuentes:** Páginas {', '.join(paginas)}"
+        st.caption(fuentes_texto)
+        
+        st.session_state.historial.append({"role": "assistant", "texto": respuesta + "\n\n" + fuentes_texto})
