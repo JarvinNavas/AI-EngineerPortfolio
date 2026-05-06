@@ -9,7 +9,7 @@ Welcome to my professional AI Engineering portfolio. This repository showcases a
 ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
 ![Groq](https://img.shields.io/badge/Groq-f39c12?style=for-the-badge&logo=fastapi&logoColor=white)
-![n8n](https://img.voluntary.net/n8n.png)
+![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
 ![Make](https://img.shields.io/badge/Make.com-purple?style=for-the-badge&logo=make&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
@@ -49,13 +49,6 @@ Throughout this portfolio, I have overcome significant engineering hurdles:
 * **Modular Versioning:** Successfully managed the migration between legacy and modern LangChain (v0.3+) architectures.
 * **Environment Stability:** Solved complex virtual environment and path corruption issues during directory restructuring.
 * **Data Integrity:** Implemented custom parsing logic to ensure AI models maintain strict factual grounding.
-
----
-
-## 📫 Contact & Connect
-* **LinkedIn:** [Your LinkedIn Profile URL]
-* **Portfolio Site:** [Your Personal Website URL]
-* **Email:** [Your Email Address]
 
 ---
 © 2026 - **Jarvin Navas** | Built with passion and code.
