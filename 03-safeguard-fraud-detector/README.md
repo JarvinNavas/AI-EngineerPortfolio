@@ -5,7 +5,7 @@
 **SafeGuard AI** is a security ecosystem based on a Telegram bot that leverages Artificial Intelligence to identify scams and protect citizens in real-time.
 
 ## 🚀 Try it Out!
-## You can use this bot in Telegram, find it as **@UsaCentinela** and it can help you. 
+Try it on Telegram: Search for @UsaCentinela to start using the bot.
 
 ---
 
