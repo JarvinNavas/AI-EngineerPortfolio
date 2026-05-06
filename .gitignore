@@ -2,7 +2,7 @@
 venv/
 .venv/
 
-# Ignorar las llaves secretas (seguridad)
+# Esta linea me ayuda a ignorar las llaves secretas (seguridad)
 .env
 
 # Ignorar la base de datos local (se genera con ingest.py)
